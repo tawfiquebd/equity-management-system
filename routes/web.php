@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HoldingController;
+use App\Http\Controllers\HoldingImportController;
+use App\Http\Controllers\HoldingSampleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +33,14 @@ Route::group(["middleware" => "auth"], function () {
 
     Route::resource('clients', ClientController::class);
     Route::resource('holdings', HoldingController::class);
+
+    Route::prefix('holdings-data')->group(function () {
+        Route::get('/sample-template', [HoldingSampleController::class, 'download'])
+            ->name('holdings.sample.download');
+
+        Route::get('/import', [HoldingImportController::class, 'showForm'])->name('holdings.import.form');
+        Route::post('/import', [HoldingImportController::class, 'import'])->name('holdings.import');
+    });
 
 });
 
