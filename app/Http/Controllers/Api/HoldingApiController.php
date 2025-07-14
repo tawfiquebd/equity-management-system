@@ -20,7 +20,7 @@ class HoldingApiController extends Controller
         return response()->json([
             'success' => true,
             'data' => $holdings
-        ], ResponseAlias::HTTP_OK);
+        ], ResponseAlias::HTTP_CREATED);
     }
 
     public function store(HoldingRequest $request): JsonResponse
