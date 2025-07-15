@@ -33,36 +33,44 @@ class ReportController extends Controller
         return view('reports.client-wise', compact('report', 'clients', 'sectors', 'filters'));
     }
 
-    public function exportClientWisePdf(ClientWiseReportService $reportService)
+    public function exportClientWisePdf(Request $request, ClientWiseReportService $reportService)
     {
-        $report = $reportService->generate();
+        $filters = $request->only(['client_id', 'sector', 'date_from', 'date_to']);
+        $report = $reportService->generate($filters);
 
         return PDF::loadView('reports.pdf.client-wise', compact('report'))->download('client-wise-report.pdf');
     }
 
-    public function exportClientWiseExcel(ClientWiseReportService $reportService)
+    public function exportClientWiseExcel(Request $request, ClientWiseReportService $reportService)
     {
-        return Excel::download(new ClientWiseReportExport($reportService), 'client-wise-report.xlsx');
+        $filters = $request->only(['client_id', 'sector', 'date_from', 'date_to']);
+        
+        return Excel::download(new ClientWiseReportExport($reportService->generate($filters)), 'client-wise-report.xlsx');
     }
 
 
-    public function sectorWise(SectorWiseReportService $reportService)
+    public function sectorWise(Request $request, SectorWiseReportService $reportService)
     {
-        $report = $reportService->generate();
+        $filters = $request->only(['sector', 'date_from', 'date_to']);
+        $sectors = Holding::query()->select('sector')->distinct()->pluck('sector');
+        $report = $reportService->generate($filters);
 
-        return view('reports.sector-wise', compact('report'));
+        return view('reports.sector-wise', compact('report', 'filters', 'sectors'));
     }
 
-    public function exportSectorWisePdf(SectorWiseReportService $reportService)
+    public function exportSectorWisePdf(Request $request, SectorWiseReportService $reportService)
     {
-        $report = $reportService->generate();
+        $filters = $request->only(['sector', 'date_from', 'date_to']);
+        $report = $reportService->generate($filters);
 
         return PDF::loadView('reports.pdf.sector-wise', compact('report'))->download('sector-wise-report.pdf');
     }
 
-    public function exportSectorWiseExcel(SectorWiseReportService $reportService)
+    public function exportSectorWiseExcel(Request $request, SectorWiseReportService $reportService)
     {
-        return Excel::download(new SectorWiseReportExport($reportService->generate()), 'sector-wise-report.xlsx');
+        $filters = $request->only(['sector', 'date_from', 'date_to']);
+
+        return Excel::download(new SectorWiseReportExport($reportService->generate($filters)), 'sector-wise-report.xlsx');
     }
 
 
