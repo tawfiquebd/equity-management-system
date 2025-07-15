@@ -2,17 +2,10 @@
 
 namespace App\Exports;
 
-use App\Services\Reports\ClientWiseReportService;
-use App\Services\Reports\SectorWiseReportService;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use App\Models\Client;
-use Maatwebsite\Excel\Concerns\FromArray;
-
-namespace App\Exports;
-
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+
 
 class SectorWiseReportExport implements FromCollection, WithHeadings
 {

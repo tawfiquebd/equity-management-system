@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="group" style="float: right;">
+        <a href="{{ route('reports.sector-wise.pdf', request()->only(['client_id', 'sector', 'date_from', 'date_to'])) }}" class="btn btn-sm btn-danger mb-3">Export as PDF</a>
+        <a href="{{ route('reports.sector-wise.excel', request()->only(['client_id', 'sector', 'date_from', 'date_to'])) }}" class="btn btn-sm btn-success mb-3">Export as Excel</a>
+    </div>
+
     <div class="container">
         <h4>Sector-wise Equity Summary</h4>
-
-        <a href="{{ route('reports.sector-wise.pdf') }}" class="btn btn-danger mb-3">Export as PDF</a>
-        <a href="{{ route('reports.sector-wise.excel') }}" class="btn btn-success mb-3">Export as Excel</a>
 
         <table class="table table-bordered">
             <thead>
