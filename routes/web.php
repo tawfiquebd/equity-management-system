@@ -61,15 +61,9 @@ Route::group(["middleware" => "auth"], function () {
 
 });
 
-use Illuminate\Support\Facades\Mail;
-
-Route::get('/send-test-email', function () {
-    Mail::raw('This is a test email from Laravel & Mailtrap', function ($message) {
-        $message->to('test@example.com')
-            ->subject('Test Email');
-    });
-
-    return 'Test email sent!';
-});
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
 
 require __DIR__.'/auth.php';
