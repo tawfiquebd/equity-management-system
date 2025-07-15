@@ -11,6 +11,14 @@
         <a class="navbar-brand" href="#">Equity Management System</a>
         @auth
             <span class="text-white">Welcome, {{ Auth::user()->name }} ({{ Auth::user()->getRoleNames()->first() }})</span>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm">
+                    Logout
+                </button>
+            </form>
+
         @endauth
     </div>
 </nav>
