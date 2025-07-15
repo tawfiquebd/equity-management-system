@@ -5,6 +5,7 @@ use App\Http\Controllers\HoldingController;
 use App\Http\Controllers\HoldingImportController;
 use App\Http\Controllers\HoldingSampleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,11 @@ Route::group(["middleware" => "auth"], function () {
 
         Route::get('/import', [HoldingImportController::class, 'showForm'])->name('holdings.import.form');
         Route::post('/import', [HoldingImportController::class, 'import'])->name('holdings.import');
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::get('/client-wise', [ReportController::class, 'clientWise'])->name('reports.client-wise');
+        Route::get('/sector-wise', [ReportController::class, 'sectorWise'])->name('reports.sector-wise');
     });
 
 });
