@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SectorWiseReportExport;
 use App\Models\Client;
 use App\Models\Holding;
 use App\Services\Reports\ClientWiseReportService;
+use App\Services\Reports\SectorWiseReportService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -42,5 +44,26 @@ class ReportController extends Controller
     {
         return Excel::download(new ClientWiseReportExport($reportService), 'client-wise-report.xlsx');
     }
+
+
+    public function sectorWise(SectorWiseReportService $reportService)
+    {
+        $report = $reportService->generate();
+
+        return view('reports.sector-wise', compact('report'));
+    }
+
+    public function exportSectorWisePdf(SectorWiseReportService $reportService)
+    {
+        $report = $reportService->generate();
+
+        return PDF::loadView('reports.pdf.sector-wise', compact('report'))->download('sector-wise-report.pdf');
+    }
+
+    public function exportSectorWiseExcel(SectorWiseReportService $reportService)
+    {
+        return Excel::download(new SectorWiseReportExport($reportService->generate()), 'sector-wise-report.xlsx');
+    }
+
 
 }

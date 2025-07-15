@@ -52,6 +52,8 @@ Route::group(["middleware" => "auth"], function () {
 
         Route::prefix('sector-wise')->group(function () {
             Route::get('/', [ReportController::class, 'sectorWise'])->name('reports.sector-wise');
+            Route::get('/pdf', [ReportController::class, 'exportSectorWisePdf'])->name('reports.sector-wise.pdf');
+            Route::get('/excel', [ReportController::class, 'exportSectorWiseExcel'])->name('reports.sector-wise.excel');
         });
 
 
