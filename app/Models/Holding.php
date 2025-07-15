@@ -20,6 +20,7 @@ class Holding extends Model
         'stock_code',
         'quantity',
         'buy_price',
+        'current_price',
         'buy_date',
         'created_by',
         'updated_by',
