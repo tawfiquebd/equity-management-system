@@ -21,11 +21,16 @@ class ClientWiseReportService
             ->map(function ($client) {
                 $totalInvestment = $client->holdings->sum(fn($h) => $h->quantity * $h->buy_price);
 
-                return [
-                    'client' => $client->name,
-                    'total_investment' => $totalInvestment,
-                    'total_holdings' => $client->holdings->count(),
-                ];
-            });
+                return $client->holdings->map(function ($holding) use ($client, $totalInvestment) {
+                    return [
+                        'client' => $client->name,
+                        'sector' => $holding->sector ?? '',
+                        'total_investment' => $totalInvestment,
+                        'total_holdings' => $client->holdings->count(),
+                    ];
+                });
+
+            })->collapse();
+
     }
 }

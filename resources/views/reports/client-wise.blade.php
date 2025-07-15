@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="group" style="float: right;">
+        <a href="{{ route('reports.client-wise.pdf', request()->only(['client_id', 'sector', 'date_from', 'date_to'])) }}" class="btn btn-sm btn-danger mb-3">Export as PDF</a>
+        <a href="{{ route('reports.client-wise.excel', request()->only(['client_id', 'sector', 'date_from', 'date_to'])) }}" class="btn btn-sm btn-success mb-3">Export as Excel</a>
+    </div>
     <div class="container">
         <h4>Client-wise Equity Summary</h4>
-
-        <a href="{{ route('reports.client-wise.pdf') }}" class="btn btn-danger mb-3">Export as PDF</a>
-        <a href="{{ route('reports.client-wise.excel') }}" class="btn btn-success mb-3">Export as Excel</a>
-
 
         {{-- Filter Form Starts Here --}}
         <form method="GET" class="row mb-4">
@@ -41,7 +41,7 @@
                 <input type="date" name="date_to" class="form-control" value="{{ request('date_to') }}">
             </div>
             <div class="col-md-12 mt-2">
-                <button class="btn btn-primary">Apply Filters</button>
+                <button class="btn btn-primary">Search</button>
                 <a href="{{ route('reports.client-wise') }}" class="btn btn-secondary">Reset</a>
             </div>
         </form>
@@ -52,6 +52,7 @@
             <thead>
             <tr>
                 <th>Client</th>
+                <th>Sector</th>
                 <th>Total Investment</th>
                 <th>Total Holdings</th>
             </tr>
@@ -60,6 +61,7 @@
             @foreach($report as $row)
                 <tr>
                     <td>{{ $row['client'] }}</td>
+                    <td>{{ $row['sector'] }}</td>
                     <td>{{ number_format($row['total_investment'], 2) }}</td>
                     <td>{{ $row['total_holdings'] }}</td>
                 </tr>

@@ -11,9 +11,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\PDF;
 use App\Exports\ClientWiseReportExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ReportController extends Controller
 {
@@ -44,8 +45,8 @@ class ReportController extends Controller
     public function exportClientWiseExcel(Request $request, ClientWiseReportService $reportService)
     {
         $filters = $request->only(['client_id', 'sector', 'date_from', 'date_to']);
-        
-        return Excel::download(new ClientWiseReportExport($reportService->generate($filters)), 'client-wise-report.xlsx');
+
+        return Excel::download(new ClientWiseReportExport($reportService, $filters), 'client-wise-report.xlsx');
     }
 
 

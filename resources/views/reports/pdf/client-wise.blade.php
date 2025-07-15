@@ -20,6 +20,7 @@
     <thead>
     <tr>
         <th>Client</th>
+        <th>Sector</th>
         <th>Total Investment</th>
         <th>Total Holdings</th>
     </tr>
@@ -28,6 +29,7 @@
     @foreach($report as $row)
         <tr>
             <td>{{ $row['client'] }}</td>
+            <td>{{ $row['sector'] }}</td>
             <td>{{ number_format($row['total_investment'], 2) }}</td>
             <td>{{ $row['total_holdings'] }}</td>
         </tr>
