@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Holding;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -22,7 +23,8 @@ class UpdateHoldingPricesJob implements ShouldQueue
 
     public function handle(): void
     {
-        $response = Http::withToken(env('JWT_TOKEN'))->get(config('app.url') . '/api/mock-stock-prices');
+        $jwtToken = Cache::get('jwt_token');
+        $response = Http::withToken($jwtToken)->get(config('app.url') . '/api/mock-stock-prices');
 
         if ($response->ok()) {
             $stocks = json_decode($response->body(), true)['data'] ?? [];
