@@ -3,32 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Holding;
+use App\Services\Reports\ClientWiseReportService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\PDF;
+use App\Exports\ClientWiseReportExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
-    public function clientWise(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+    public function clientWise(Request $request, ClientWiseReportService $reportService): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
         $clients = Client::query()
-            ->with('holdings')
-            ->get();
+            ->get(['id', 'name']);
 
-        $report = $clients->map(function ($client) {
-            $totalInvestment = $client->holdings->sum(function ($h) {
-                return $h->quantity * $h->buy_price;
-            });
+        $sectors = Holding::query()
+            ->select('sector')
+            ->distinct()
+            ->pluck('sector');
 
-            return [
-                'client' => $client->name,
-                'total_investment' => $totalInvestment,
-                'total_holdings' => $client->holdings->count(),
-            ];
-        });
+        $filters = $request->only(['client_id', 'sector', 'date_from', 'date_to']);
+        $report = $reportService->generate($filters);
 
-        return view('reports.client-wise', compact('report'));
+        return view('reports.client-wise', compact('report', 'clients', 'sectors', 'filters'));
+    }
+
+    public function exportClientWisePdf(ClientWiseReportService $reportService)
+    {
+        $report = $reportService->generate();
+
+        return PDF::loadView('reports.pdf.client-wise', compact('report'))->download('client-wise-report.pdf');
+    }
+
+    public function exportClientWiseExcel(ClientWiseReportService $reportService)
+    {
+        return Excel::download(new ClientWiseReportExport($reportService), 'client-wise-report.xlsx');
     }
 
 }

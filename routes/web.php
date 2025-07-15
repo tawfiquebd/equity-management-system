@@ -44,8 +44,17 @@ Route::group(["middleware" => "auth"], function () {
     });
 
     Route::prefix('reports')->group(function () {
-        Route::get('/client-wise', [ReportController::class, 'clientWise'])->name('reports.client-wise');
-        Route::get('/sector-wise', [ReportController::class, 'sectorWise'])->name('reports.sector-wise');
+        Route::prefix('client-wise')->group(function () {
+            Route::get('/', [ReportController::class, 'clientWise'])->name('reports.client-wise');
+            Route::get('/pdf', [ReportController::class, 'exportClientWisePdf'])->name('reports.client-wise.pdf');
+            Route::get('/excel', [ReportController::class, 'exportClientWiseExcel'])->name('reports.client-wise.excel');
+        });
+
+        Route::prefix('sector-wise')->group(function () {
+            Route::get('/', [ReportController::class, 'sectorWise'])->name('reports.sector-wise');
+        });
+
+
     });
 
 });
