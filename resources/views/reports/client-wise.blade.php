@@ -51,18 +51,24 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Client</th>
+                <th>Client Name</th>
+                <th>Client Email</th>
+                <th>Client Phone</th>
                 <th>Sector</th>
                 <th>Total Investment</th>
+                <th>Current Value</th>
                 <th>Total Holdings</th>
             </tr>
             </thead>
             <tbody>
             @foreach($report as $row)
                 <tr>
-                    <td>{{ $row['client'] }}</td>
+                    <td>{{ $row['client_name'] }}</td>
+                    <td>{{ $row['client_email'] }}</td>
+                    <td>{{ $row['client_phone'] }}</td>
                     <td>{{ $row['sector'] }}</td>
                     <td>{{ number_format($row['total_investment'], 2) }}</td>
+                    <td>{{ number_format($row['current_value'], 2) }}</td>
                     <td>{{ $row['total_holdings'] }}</td>
                 </tr>
             @endforeach
