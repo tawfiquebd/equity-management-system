@@ -9,7 +9,7 @@ class ClientWiseReportService
 {
     public function generate(array $filters = [])
     {
-        $data = Client::query()
+        return Client::query()
             ->with('holdings')
             ->when($filters['client_id'] ?? null, fn($q, $clientId) => $q->where('id', $clientId))
             ->with(['holdings' => function ($q) use ($filters) {
@@ -37,8 +37,5 @@ class ClientWiseReportService
                 });
 
             })->flatten(1);
-
-        return $data;
-
     }
 }
