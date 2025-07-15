@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClientApiController;
 use App\Http\Controllers\Api\HoldingApiController;
+use App\Http\Controllers\Api\MockStockPriceApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,5 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('holdings', HoldingApiController::class);
     Route::apiResource('clients', ClientApiController::class);
+    Route::get('/mock-stock-prices', [MockStockPriceApiController::class, 'index']);
 });
