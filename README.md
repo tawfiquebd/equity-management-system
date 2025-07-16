@@ -193,8 +193,10 @@ Password: admin123
 
 ## Cron Jobs / Scheduled Tasks
 
-* `update-holdings-prices` – Updates current market values
-* `send-greeting-mails` – Sends scheduled greetings to users
-  Add to `app/Console/Kernel.php`:
+* `update-holdings-prices` – Updates current market values in every five minutes by scheduler, which is added to `app/Console/Kernel.php`
+  
+* `send-greeting-mails` – Send greetings email to new user when user register in site.
+  `[ Required to run : php artisan queue:work   and  php artisan schedule:work ]`
+  `Also need Mailtrap username and password. which should be put in .env`
 
 ---
