@@ -82,20 +82,28 @@ Build a secure, scalable, and well-documented Laravel-based internal equity mana
 * Laravel 10+
 * MySQL
 
-### Install & Run
-
-```
-git clone https://github.com/your-username/equity_management_system.git
-cd equity_management_system
-
 #Composer version 2.4.1
 #PHP Version PHP 8.1.10
 #Laravel Version 10.10
 #Node version v18.8.0
 
+### Install & Run
+
+```
+git clone https://github.com/tawfiquebd/equity-management-system.git
+
+cd equity_management_system
+
+git fetch --all
+
+git checkout staging
+
 cp .env.example .env
 
 composer install
+
+npm install 
+
 php artisan key:generate
 
 # Setup DB
@@ -111,7 +119,6 @@ php artisan schedule:work
 # Serve
 php artisan serve
 
-npm install 
 npm run dev
 
 ```
