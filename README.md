@@ -118,7 +118,7 @@ npm run dev
 
 ---
 
-## 🧪 API Endpoints
+## API Endpoints
 
 > Below routes are prefixed with `/api` and protected via JWT Auth middleware.
 
@@ -150,7 +150,9 @@ npm run dev
 GET   /api/mock-stock-prices
 ```
 
-Below routes in web.php
+##  Web API Endpoints
+
+> Below routes are found in web.php
 
 ### CRUD
 
