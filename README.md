@@ -180,7 +180,7 @@ Below routes in web.php
 
 ---
 
-## 🧪 Test User Credentials
+## Test User Credentials
 
 ```
 Email: test@example.com
@@ -189,7 +189,7 @@ Password: admin123
 
 ---
 
-## ⏱️ Cron Jobs / Scheduled Tasks
+## Cron Jobs / Scheduled Tasks
 
 * `update-holdings-prices` – Updates current market values
 * `send-greeting-mails` – Sends scheduled greetings to users
